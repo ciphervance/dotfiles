@@ -1,0 +1,11 @@
+#/bin/bash
+
+
+# Grabs and downloads Go for Google
+wget https://golang.org/dl/go1.15.2.linux-amd64.tar.gz
+
+# Untar's the file just recently downloaded
+sudo tar -C /usr/local -xzf go1.15.2.linux-amd64.tar.gz
+
+# Exports the GOPATH
+export PATH=$PATH:/usr/local/go/bin
