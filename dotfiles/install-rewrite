@@ -27,11 +27,11 @@ cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
 fc-cache -f -v
 
 # Check to see if Rust is installed.
-echo 'install rust'
-curl https://sh.rustup.rs -sSf | sh
+# echo 'install rust'
+# curl https://sh.rustup.rs -sSf | sh
 
 # Fancy ls script taken from github.com/brandonroehl/dotfiles
-files=( 'vimrc' 'vim' 'zshrc' 'zsh' 'tmux.conf' 'tmux-dev.sh' 'tmux-osx' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'gemrc' 'rspec' 'eslintrc' )
+files=( 'vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'gemrc' 'rspec' 'eslintrc' )
 for file in $files
 do
   echo ""
