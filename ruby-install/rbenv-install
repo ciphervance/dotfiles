@@ -2,8 +2,8 @@
 
 # Installs rbenv
 
-rbenv install 2.7.1
-rbenv global 2.7.1
+rbenv install 2.7.2
+rbenv global 2.7.2
 ruby -v
 
 # Insalls Bundler
@@ -13,5 +13,5 @@ rbenv rehash
 
 # Installs Rails Version 6.
 
-gem install rails -v 6.0.2.2
+gem install rails -v 6.0.3.4
 rbenv rehash
