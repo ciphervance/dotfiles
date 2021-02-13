@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 # A script for installing dependencies and setting up needed Symbolic Links
-# Created by Blake Ridgway
-# Updated 07/01/2020
+# Created by Jeremy Dwayne
+# Modified by Blake Ridgway
+# Updated 02/13/2021
 # NOTICE: Modify script to your own preferences! This mostly uses default
 #         locations, but can be changed to whatever you need.
 
@@ -26,9 +27,9 @@ mkdir -p ~/.local/share/fonts
 cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
 fc-cache -f -v
 
-# Check to see if Rust is installed.
-# echo 'install rust'
-# curl https://sh.rustup.rs -sSf | sh
+# Install Rust
+ echo 'install rust'
+ curl https://sh.rustup.rs -sSf | sh
 
 # Fancy ls script taken from github.com/brandonroehl/dotfiles
 files=( 'vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'gemrc' 'rspec' 'eslintrc' )
