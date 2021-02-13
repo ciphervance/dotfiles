@@ -28,7 +28,7 @@ alias ip="curl icanhazip.com"
 alias todos="ag --nogroup '(TODO|FIX(ME)?):'"
 
 # Bandwhich
-alias bandwhich="sudo ~/.cargo/bin/bandwhich"
+alias band="sudo ~/.cargo/bin/bandwhich"
 
 # Python
 alias py='python3'
@@ -56,12 +56,9 @@ alias rcc="rustc"
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-# CD Aliases
-alias sailex='cd ~/Data/Coding/Rust/Sailex'
-alias pweb='cd ~/Data/Coding/Projects/RoR/blakeridgway'
 # Scripts Aliases
 alias tmpc='source ~/.scripts/CTemplate.sh'
-alias project='source ~/.scripts/ProjectLayout.sh'
+alias project='source ~/dotfiles/scripts/ProjectLayout.sh'
 alias mdtopdf='source ~/.scripts/MDtoPDF.sh'
 
 # Tmux Aliases
@@ -91,7 +88,7 @@ alias tmuxreload='source ~/.tmux.conf'
 alias zshreload='source ~/.zshrc'
 
 # SSH
-alias sshwork='ssh winterjd@10.35.72.137'
+# alias sshwork='ssh bridgway@0.0.0.0'
 
 # Logbook
 lbt() {
