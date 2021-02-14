@@ -12,19 +12,14 @@ git submodule update --recursive
 # Installs tilix
 sudo apt install tilix
 
-# Check to see if Oh My ZSH is installed
-if ! [ -d "$HOME/.oh-my-zsh/" ]; then
-  echo >&2 "oh-my-zsh is not installed, fixing that...";
-  curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-fi
+# Oh My ZSH is installer
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Grab and configure powerlevel9k
-# Powerlevel9k
 # git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
-# Powerlevel10k
+# POWERLEVEL10K
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
 
 # Grabs Nerd Font and configures it
 wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
