@@ -12,6 +12,9 @@ git submodule update --recursive
 # Installs tilix
 sudo apt install tilix
 
+# SSH Key Gen
+ssh-keygen -t ed25519 -C "blake@blakeridgway.dev"
+
 # Oh My ZSH is installer
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
