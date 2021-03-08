@@ -31,11 +31,8 @@ cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
 fc-cache -f -v
 
 # Grabs and downloads Go for Google
-wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.15.6.linux-amd64.tar.gz
-
-# Exports the GOPATH
-export PATH=$PATH:/usr/local/go/bin
+wget https://golang.org/dl/go1.16.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
 
 # Install Rust
 echo 'install rust'
