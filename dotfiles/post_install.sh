@@ -17,6 +17,7 @@ PACKAGE_LIST=(
   vlc
   python3
   python3-pip
+  system76-keyboard-configurator
 )
 
 FLATPAK_LIST=(
