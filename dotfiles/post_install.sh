@@ -90,6 +90,10 @@ for flatpak_name in ${FLATPAK_LIST[@]}; do
 	fi
 done
 
+mkdir -p ~/.config/nvim/
+echo $'set runtimepath^=~/.vim runtimepath+=~/.vim/after\nlet
+&packpath=&runtimepath\nsource ~/.vimrc' > ~/.config/nvim/init.vim
+
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
