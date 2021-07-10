@@ -14,7 +14,6 @@ PACKAGE_LIST=(
   neofetch
   htop
   steam
-  lutris
   vlc
   python3
   python3-pip
@@ -81,6 +80,14 @@ for package_name in ${PACKAGE_LIST[@]}; do
   else
     echo "$package_name already installed"
   fi
+done
+
+for flatpak_name in ${FLATPAK_LIST[@]}; do
+	if ! flatpak list | grep -q $flatpak_name; then
+		flatpak install "$flatpak_name" -y
+	else
+		echo "$package_name already installed"
+	fi
 done
 
 sudo apt update
