@@ -18,6 +18,7 @@ PACKAGE_LIST=(
   python3
   python3-pip
   system76-keyboard-configurator
+  solaar
 )
 
 FLATPAK_LIST=(
