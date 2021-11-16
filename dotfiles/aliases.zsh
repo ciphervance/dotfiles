@@ -7,25 +7,24 @@ alias e="$EDITOR"
 alias v="$VISUAL"
 alias tmux='tmux -u'
 
-# checks if on linux or OSX for open command
-if [ "$(uname)" = "Linux" ]; then
-  alias open="xdg-open"
-  alias say='echo "$*" | espeak -s 120 2>/dev/null'
-  alias cpwd='pwd|tr -d "\n"|xclip'
-else
-  # OSX
-  alias cpwd='pwd|tr -d "\n"|pbcopy'
-fi
-
 # top
 alias cpu='top -o CPU'
 alias mem='top -o MEM'
 
 # Get your current public IP
 alias ip="curl icanhazip.com"
+alias ip6="wget -q0- -ti -T2 ipv6.icanhazip.com"
 
-# list TODO/FIX lines from the current project
-alias todos="ag --nogroup '(TODO|FIX(ME)?):'"
+# Git
+alias ga="git add"
+alias gaa="git add ."
+alias gc="git commit -m "
+alias gp='git push -u origin "$(git symbolic-ref --short HEAD)"'
+alias gs="git status"
+alias nah="git reset --hard; git clean -df;"
+alias grr="git remote remove origin"
+alias gra="git remote add origin "
+alias clonerepo="git fetch --all && git pull --all && git clone-branches"
 
 # Bandwhich
 alias band="sudo ~/.cargo/bin/bandwhich"
@@ -56,33 +55,6 @@ alias rcc="rustc"
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-# Scripts Aliases
-alias tmpc='source ~/.scripts/CTemplate.sh'
-alias project='source ~/dotfiles/scripts/ProjectLayout.sh'
-alias mdtopdf='source ~/.scripts/MDtoPDF.sh'
-
-# Tmux Aliases
-alias tdev='source ~/dotfiles/scripts/tmux-dev.sh'
-alias tls='tmux ls'
-
-tnew() {
-    if [ "$1" != "" ]
-    then
-			tmux new -s $1
-		else
-			tmux
-    fi
-}
-
-tatt() {
-    if [ "$1" != "" ]
-    then
-			tmux attach -t $1
-		else
-			tmux attach
-    fi
-}
-
 # Configuration Reloads
 alias tmuxreload='source ~/.tmux.conf'
 alias zshreload='source ~/.zshrc'
@@ -90,43 +62,11 @@ alias zshreload='source ~/.zshrc'
 # SSH
 # alias sshwork='ssh bridgway@0.0.0.0'
 
-# Logbook
-lbt() {
-  nvim -c ":VimwikiMakeDiaryNote" 
-}
-
-lby() {
-  nvim -c ":VimwikiMakeYesterdayDiaryNote" 
-}
-
-lbi() {
-  nvim -c ":VimwikiDiaryIndex"
-}
-
-wiki() {
-  nvim -c ":VimwikiIndex"
-}
-
-swiki() {
-  nvim -c ":VimwikiSearch $*"
-}
-
 # nvim
 alias vim=nvim
 alias vi=nvim
 
+# Configuration 
 alias vimrc='nvim ~/.vimrc'
 alias ealias='nvim ~/dotfiles/aliases.zsh'
 alias zshrc='nvim ~/.zshrc'
-
-ycmcomp() {
-  cp ~/.dotfiles/templates/_ycm_extra_conf.py ./.ycm_extra_conf.py
-}
-
-alias fv='vim $(fzf --height 40%)'
-
-alias eclim='/Applications/Eclipse.app/Contents/Eclipse/eclimd  > /dev/null 2>&1 &'
-
-# Docker-Compose Commands
-alias dce='docker-compose exec --user $(id -u):$(id -g)'
-alias dc='docker-compose'

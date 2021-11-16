@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+# A script for setting up post install
+# Relies on Flatpak to be installed
+# Created by Blake Ridgway
+
+# Setup all System76 Software
+sudo dnf copr enable szydell/system76 
+sudo dnf install system76-dkms system76-power system76-driver system76-firmware firmware-manager system76-io-dkms system76-acpi-dkms
+sudo systemctl enable system76-power system76-power-wake system76-firmware-daemon
+sudo systemctl start system76-power system76-firmware-daemon
+systemctl enable --user com.system76.FirmwareManager.Notify.timer
+
+# Verify flatpak is engaged properly
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+PACKAGE_LIST=(
+  dialog
+  git
+  htop
+  neofetch
+  neovim
+  java-11-openjdk
+  python3
+  python3-pip
+  solaar
+  tilix
+  virt-manager
+  vlc
+  zsh
+)
+
+FLATPAK_LIST=(
+  com.discordapp.Discord
+  com.github.fabiocolacio.marker
+  com.mattermost.Desktop
+  com.mojang.Minecraft
+  com.obsproject.Studio
+  com.valvesoftware.Steam
+)
+
+echo #######################
+echo # Installing Packages #
+echo #######################
+
+# iterate through package and installs them
+for package_name in ${PACKAGE_LIST[@]}; do
+  if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
+    echo "Installing $package_name..."
+    sleep .5
+    sudo dnf install "$package_name" -y
+    echo "$package_name has been installed"
+  else
+    echo "$package_name already installed"
+  fi
+done
+
+for flatpak_name in ${FLATPAK_LIST[@]}; do
+	if ! flatpak list | grep -q $flatpak_name; then
+		flatpak install "$flatpak_name" -y
+	else
+		echo "$package_name already installed"
+	fi
+done
+
+git submodule init
+git submodule update --recursive
+
+echo ############
+echo # Protonup #
+echo ############
+
+pip3 install protonup
+
+echo #####################
+echo # Install Nerd Font #
+echo #####################
+
+# Nerd Font install
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
+mkdir -p ~/.local/share/fonts 
+cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
+fc-cache -f -v
+
+echo ##################################
+echo # Downloading and Configuring Go #
+echo ##################################
+
+# Grabs and downloads Go for Google
+wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
+
+echo ###################
+echo # Installing Rust #
+echo ###################
+
+# Install Rust
+curl https://sh.rustup.rs -sSf | sh
+
+echo ######################
+echo # Setting up SSH Key #
+echo ######################
+
+# SSH Key Gen
+ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
+
+echo ######################
+echo # Installing OhMyZSH #
+echo ######################
+
+# Oh-my-ZSH
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo ############################
+echo # Setting up Powerlevel10k #
+echo ############################
+
+# POWERLEVEL10K
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+echo ##################################
+echo # Copying p10k Config file to ~/
+echo ##################################
+
+# Copy p10k Config file
+cp .p10k.zsh ~/
+
+echo ############################
+echo # Setting up nvim/init.vim #
+echo ############################
+
+mkdir -p ~/.config/nvim/
+echo $'set runtimepath^=~/.vim runtimepath+=~/.vim/after\nlet &packpath=&runtimepath\nsource ~/.vimrc' > ~/.config/nvim/init.vim
+
+echo #######################
+echo # Cleanup and Updates #
+echo #######################
+
+sudo dnf update
+flatpak update
+
+echo ################
+echo # File Cleanup #
+echo ################
+
+rm -r *.ttf *.tar.gz *.rpm
+
+FILES=( 'vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'aliases' )
+for file in ${FILES[@]}; do
+  echo ""
+  echo "Simlinking $file to $HOME"
+  ln -sf "$PWD/$file" "$HOME/.$file"
+  if [ $? -eq 0 ]
+  then
+    echo "$PWD/$file ~> $HOME/.$file"
+  else
+    echo 'Install failed to symlink.'
+    exit 1
+  fi
+done
+
+# Enable RPM Fusion
+# Run in Bash as Zsh cannot do `$(rpm -E %fedora)`
+sudo dnf install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+sudo dnf install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  
+# EXECUTE LAST SO NOTHING BREAKS
+
+# Enable Mesa aco
+sudo dnf copr enable gloriouseggroll/mesa-aco
+
+# Enable fsync kernel
+sudo dnf copr enable sentry/kernel-fsync
+
+sudo dnf update --refresh
+
