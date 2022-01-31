@@ -3,9 +3,6 @@
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
-git submodule init
-git submodule update --recursive
-
 PACKAGE_LIST=(
   dialog
   discord
@@ -28,7 +25,6 @@ PACKAGE_LIST=(
 FLATPAK_LIST=(
   com.github.fabiocolacio.marker
   com.mattermost.Desktop
-  com.mojang.Minecraft
   com.obsproject.Studio
   net.veloren.Airshipper
 )
