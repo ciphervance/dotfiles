@@ -26,7 +26,8 @@ FLATPAK_LIST=(
   com.github.fabiocolacio.marker
   com.mattermost.Desktop
   com.obsproject.Studio
-  net.veloren.Airshipper
+  net.cozic.joplin_desktop
+  net.veloren.Airshipper  
 )
 
 echo #######################
