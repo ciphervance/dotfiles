@@ -31,11 +31,11 @@ PACKAGE_LIST=(
 
 FLATPAK_LIST=(
   com.discordapp.Discord
-  com.github.fabiocolacio.marker
   com.mattermost.Desktop
-  com.mojang.Minecraft
   com.obsproject.Studio
   com.valvesoftware.Steam
+  net.veloren.airshipper
+  sh.cider.Cider
 )
 
 echo #######################
@@ -88,20 +88,6 @@ echo ##################################
 # Grabs and downloads Go for Google
 wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
-
-echo ###################
-echo # Installing Rust #
-echo ###################
-
-# Install Rust
-# curl https://sh.rustup.rs -sSf | sh
-
-echo ######################
-echo # Setting up SSH Key #
-echo ######################
-
-# SSH Key Gen
-# ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
 echo ######################
 echo # Installing OhMyZSH #
@@ -172,7 +158,7 @@ sudo dnf install \
 sudo dnf copr enable gloriouseggroll/mesa-aco
 
 # Enable fsync kernel
-# sudo dnf copr enable sentry/kernel-fsync
+sudo dnf copr enable sentry/kernel-fsync
 
 sudo dnf update --refresh
 
