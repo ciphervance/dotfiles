@@ -17,12 +17,12 @@ call plug#begin('~/.vim/plugged/')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " ctrl+p :FZF
 
+  " vim floaterm
+  Plug 'voldikss/vim-floaterm'
+
   " vim colorscheme
   Plug 'sainnhe/edge'
 
-  " Rust Language Support
-  Plug 'rust-lang/rust.vim'
-  
   " Go Language Support
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
@@ -77,14 +77,15 @@ call plug#begin('~/.vim/plugged/')
 
   Plug 'artur-shaik/vim-javacomplete2'
   Plug 'dansomething/vim-eclim' 
-
   
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
-   endif
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+
   Plug 'Shougo/neosnippet'
   Plug 'Shougo/neosnippet-snippets'
 
@@ -577,11 +578,6 @@ let g:indentLine_char = '│'
 autocmd! BufWritePost,BufEnter * Neomake
 
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = []
-let g:deoplete#file#enable_buffer_path = 1
 
 let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 

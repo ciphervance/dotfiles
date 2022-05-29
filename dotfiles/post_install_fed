@@ -62,8 +62,8 @@ for flatpak_name in ${FLATPAK_LIST[@]}; do
 	fi
 done
 
-git submodule init
-git submodule update --recursive
+# git submodule init
+# git submodule update --recursive
 
 echo ############
 echo # Protonup #
@@ -94,14 +94,14 @@ echo # Installing Rust #
 echo ###################
 
 # Install Rust
-curl https://sh.rustup.rs -sSf | sh
+# curl https://sh.rustup.rs -sSf | sh
 
 echo ######################
 echo # Setting up SSH Key #
 echo ######################
 
 # SSH Key Gen
-ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
+# ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
 echo ######################
 echo # Installing OhMyZSH #
@@ -172,7 +172,7 @@ sudo dnf install \
 sudo dnf copr enable gloriouseggroll/mesa-aco
 
 # Enable fsync kernel
-sudo dnf copr enable sentry/kernel-fsync
+# sudo dnf copr enable sentry/kernel-fsync
 
 sudo dnf update --refresh
 
