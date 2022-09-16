@@ -3,31 +3,36 @@
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
+# Verify flatpak is engaged properly
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 PACKAGE_LIST=(
   dialog
-  discord
+  git
+  go
   htop
   neofetch
   neovim
-  openjdk-11-jre
   python3
   python3-pip
   solaar
-  steam
-  system76-keyboard-configurator
   tilix
-  libvirt-daemon-driver-lxc
   virt-manager
-  vlc
   zsh
 )
 
 FLATPAK_LIST=(
-  com.github.fabiocolacio.marker
-  com.mattermost.Desktop
+  com.bitwarden.desktop
+  com.discordapp.Discord
+  com.jetbrains.GoLand
+  com.jetbrains.DataGrip
   com.obsproject.Studio
-  net.cozic.joplin_desktop
-  net.veloren.Airshipper  
+  com.slack.Slack
+  com.valvesoftware.Steam
+  net.davidotek.pupgui2
+  net.veloren.airshipper
+  org.videolan.VLC
+  sh.cider.Cider
 )
 
 echo #######################
@@ -36,10 +41,10 @@ echo #######################
 
 # iterate through package and installs them
 for package_name in ${PACKAGE_LIST[@]}; do
-  if ! sudo apt list --installed | grep -q "^\<$package_name\>"; then
+  if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
     echo "Installing $package_name..."
     sleep .5
-    sudo apt install "$package_name" -y
+    sudo dnf install "$package_name" -y
     echo "$package_name has been installed"
   else
     echo "$package_name already installed"
@@ -63,28 +68,6 @@ wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regul
 mkdir -p ~/.local/share/fonts 
 cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
 fc-cache -f -v
-
-echo ##################################
-echo # Downloading and Configuring Go #
-echo ##################################
-
-# Grabs and downloads Go for Google
-wget https://golang.org/dl/go1.17.2.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.17.2.linux-amd64.tar.gz
-
-echo ###################
-echo # Installing Rust #
-echo ###################
-
-# Install Rust
-curl https://sh.rustup.rs -sSf | sh
-
-echo ######################
-echo # Setting up SSH Key #
-echo ######################
-
-# SSH Key Gen
-ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
 echo ######################
 echo # Installing OhMyZSH #
@@ -114,24 +97,20 @@ echo ############################
 mkdir -p ~/.config/nvim/
 echo $'set runtimepath^=~/.vim runtimepath+=~/.vim/after\nlet &packpath=&runtimepath\nsource ~/.vimrc' > ~/.config/nvim/init.vim
 
-# wget https://github.com/OrangeDrangon/android-messages-desktop/releases/download/v5.1.1/AndroidMessages-v5.1.1-linux-amd64.deb
-
 echo #######################
 echo # Cleanup and Updates #
 echo #######################
 
-sudo apt update
-sudo apt upgrade -y
-sudo apt autoremove -y
+sudo dnf upgrade --refresh
 flatpak update
 
 echo ################
 echo # File Cleanup #
 echo ################
 
-rm -r *.ttf *.tar.gz
+rm -r *.ttf *.tar.gz *.rpm
 
-FILES=( 'vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' )
+FILES=( 'vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'aliases' )
 for file in ${FILES[@]}; do
   echo ""
   echo "Simlinking $file to $HOME"
@@ -145,3 +124,18 @@ for file in ${FILES[@]}; do
   fi
 done
 
+# Enable RPM Fusion
+
+sudo dnf install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+sudo dnf install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  
+# Enable Mesa aco
+sudo dnf copr enable gloriouseggroll/mesa-aco
+
+# Enable fsync kernel
+sudo dnf copr enable sentry/kernel-fsync
+
+sudo dnf upgrade --refresh
