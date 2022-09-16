@@ -26,9 +26,6 @@ alias grr="git remote remove origin"
 alias gra="git remote add origin "
 alias clonerepo="git fetch --all && git pull --all && git clone-branches"
 
-# Bandwhich
-alias band="sudo ~/.cargo/bin/bandwhich"
-
 # Python
 alias py='python3'
 alias py3='python3'
@@ -49,18 +46,12 @@ alias rc="rails c"
 alias rs="rails s"
 alias gi="gem install"
 
-# Rust
-alias rcc="rustc"
-
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
 # Configuration Reloads
 alias tmuxreload='source ~/.tmux.conf'
 alias zshreload='source ~/.zshrc'
-
-# SSH
-# alias sshwork='ssh bridgway@0.0.0.0'
 
 # nvim
 alias vim=nvim
