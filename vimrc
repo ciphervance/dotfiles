@@ -63,7 +63,6 @@ call plug#begin('~/.vim/plugged/')
   Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
   Plug 'tpope/vim-rails', { 'for': 'ruby' }
 
-
   Plug 'w0rp/ale'
   Plug 'sbdchd/neoformat'
 
@@ -78,14 +77,6 @@ call plug#begin('~/.vim/plugged/')
   Plug 'artur-shaik/vim-javacomplete2'
   Plug 'dansomething/vim-eclim' 
   
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-
   Plug 'Shougo/neosnippet'
   Plug 'Shougo/neosnippet-snippets'
 
