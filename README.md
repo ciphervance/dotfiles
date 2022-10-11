@@ -14,5 +14,6 @@ Git Make sure to edit the gitconfig and add your credentials instead of mine
 
 VIM Installation Tips I use neovim and vim-plug. So if you're using regular vim you might want to remove the neovim specific plugins from my vimrc. Also, you might need to run :PlugClean to remove the plugin directories then run :PlugInstall to reinstall them.
 
-*Things to Remember*
-`~/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/install -f`
+*Things to Remember*  
+`~/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/install -f`  
+`ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)`
