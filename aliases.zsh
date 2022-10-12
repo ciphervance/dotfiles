@@ -18,7 +18,7 @@ alias ip6="wget -q0- -ti -T2 ipv6.icanhazip.com"
 # Git
 alias ga="git add"
 alias gaa="git add ."
-alias gc="git commit -m "
+alias gc="git commit "
 alias gp='git push -u origin "$(git symbolic-ref --short HEAD)"'
 alias gs="git status"
 alias nah="git reset --hard; git clean -df;"

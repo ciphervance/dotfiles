@@ -5,3 +5,5 @@
 	template = /home/bridgway/dotfiles/commit-conventions.txt
 [core]
 	editor = nvim +14 -c +startinsert
+[init]
+	defaultBranch = main
