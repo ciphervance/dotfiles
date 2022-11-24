@@ -1,4 +1,3 @@
-# A collection of useful aliases to make terminal life bliss
 # Unix
 alias ll="ls -la"
 alias ln="ln -v"
@@ -27,6 +26,10 @@ alias gra="git remote add origin "
 alias clonerepo="git fetch --all && git pull --all && git clone-branches"
 
 # Python
+alias initvenv='python3 -m venv vemv'
+alias startvenv='source venv/bin/activate'
+alias stopvenv='deactivate'
+alias pyinstall='python3 -m pip install -r requirements.txt'
 alias py='python3'
 alias py3='python3'
 alias python='python3'
