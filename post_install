@@ -9,7 +9,6 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 PACKAGE_LIST=(
   dialog
   git
-  go
   htop
   neofetch
   neovim
@@ -23,13 +22,7 @@ PACKAGE_LIST=(
 
 FLATPAK_LIST=(
   com.bitwarden.desktop
-  com.discordapp.Discord
-  com.jetbrains.GoLand
-  com.jetbrains.DataGrip
-  com.obsproject.Studio
   com.slack.Slack
-  com.valvesoftware.Steam
-  net.davidotek.pupgui2
   net.veloren.airshipper
   org.videolan.VLC
   sh.cider.Cider
@@ -73,26 +66,29 @@ echo ######################
 echo # Installing OhMyZSH #
 echo ######################
 
-# Oh-my-ZSH
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-echo ############################
-echo # Setting up Powerlevel10k #
-echo ############################
+echo ##################
+echo # Setup Starship #
+echo ##################
 
-# POWERLEVEL10K
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+curl -sS https://starship.rs/install.sh | sh
 
-echo ##################################
-echo # Copying p10k Config file to ~/
-echo ##################################
+echo ########################
+echo # Creating Config File #
+echo ########################
 
-# Copy p10k Config file
-cp .p10k.zsh ~/
+mkdir -p ~/.config && touch ~/.config/starship.toml
 
-echo ############################
-echo # Setting up nvim/init.vim #
-echo ############################
+echo ###################
+echo # Enabling Config #
+echo ###################
+
+starship preset nerd-font-symbols > ~/.config/starship.toml
+
+echo ###################
+echo # Setting up nvim #
+echo ###################
 
 mkdir -p ~/.config/nvim/
 echo $'set runtimepath^=~/.vim runtimepath+=~/.vim/after\nlet &packpath=&runtimepath\nsource ~/.vimrc' > ~/.config/nvim/init.vim
@@ -132,10 +128,3 @@ sudo dnf install \
 sudo dnf install \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
   
-# Enable Mesa aco
-sudo dnf copr enable gloriouseggroll/mesa-aco
-
-# Enable fsync kernel
-sudo dnf copr enable sentry/kernel-fsync
-
-sudo dnf upgrade --refresh
