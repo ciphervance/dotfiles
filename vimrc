@@ -23,9 +23,6 @@ call plug#begin('~/.vim/plugged/')
   " vim colorscheme
   Plug 'sainnhe/edge'
 
-  " Go Language Support
-  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
   " tab autocomplete
   Plug 'ervandew/supertab'
   Plug 'alvan/vim-closetag'
@@ -66,11 +63,6 @@ call plug#begin('~/.vim/plugged/')
   Plug 'w0rp/ale'
   Plug 'sbdchd/neoformat'
 
-  " Typescript 
-  Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
-
-  Plug 'Yggdroot/indentLine' 
-
   " Autonomous make integration (Compile)
   Plug 'neomake/neomake'
 
@@ -89,7 +81,7 @@ call plug#begin('~/.vim/plugged/')
 call plug#end()
 
 let mapleader=","
-
+let python_highlight_all = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
@@ -368,6 +360,8 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
 
+" Exit insert with JK
+inoremap jk <Esc>
 
 " Move lines of code around
 nnoremap <C-j> :m .+1<CR>==
