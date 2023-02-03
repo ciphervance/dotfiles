@@ -21,7 +21,7 @@ export PATH="$PATH:$HOME/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:$HOM
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/dotfiles/aliases.zsh
-source $HOME/.cargo/env
+# source $HOME/.cargo/env
 
 eval "$(ssh-agent -s)"
 ssh-add -A 2>/dev/null;
