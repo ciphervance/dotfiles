@@ -8,11 +8,18 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 PACKAGE_LIST=(
   bpytop
+  cargo
+  gcc-c++
   git
+  golang
+  fd-find
+  java-openjdk
   neofetch
   neovim
   python3
   python3-pip
+  ripgrep
+  rust
   solaar
   tilix
   virt-manager
@@ -22,9 +29,8 @@ PACKAGE_LIST=(
 FLATPAK_LIST=(
   com.bitwarden.desktop
   com.slack.Slack
-  net.veloren.airshipper
-  org.videolan.VLC
-  sh.cider.Cider
+  md.obsidian.Obsidian
+
 )
 
 echo #######################
@@ -51,6 +57,18 @@ for flatpak_name in ${FLATPAK_LIST[@]}; do
 	fi
 done
 
+
+echo #######
+echo # NVM #
+echo #######
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+echo ##########
+echo # pynvim #
+echo ##########
+
+/usr/bin/python3 -m pip install pynvim
+
 echo #######
 echo # SSH #
 echo #######
@@ -72,6 +90,12 @@ echo # Installing OhMyZSH #
 echo ######################
 
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo ########
+echo # Node #
+echo ########
+
+zsh nvm install node
 
 echo ##################
 echo # Setup Starship #
@@ -95,8 +119,7 @@ echo ###################
 echo # Setting up nvim #
 echo ###################
 
-mkdir -p ~/.config/nvim/
-echo $'set runtimepath^=~/.vim runtimepath+=~/.vim/after\nlet &packpath=&runtimepath\nsource ~/.vimrc' > ~/.config/nvim/init.vim
+cp -r nvim/ ~/.config/nvim/
 
 echo #######################
 echo # Cleanup and Updates #
