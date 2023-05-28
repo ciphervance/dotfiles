@@ -20,6 +20,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 PACKAGE_LIST=(
   bpytop
   cargo
+  discord
   gcc-c++
   git
   golang
