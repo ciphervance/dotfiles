@@ -26,7 +26,7 @@ alias gra="git remote add origin "
 alias clonerepo="git fetch --all && git pull --all && git clone-branches"
 
 # Python
-alias initvenv='python3 -m venv vemv'
+alias initvenv='python3 -m venv venv'
 alias startvenv='source venv/bin/activate'
 alias stopvenv='deactivate'
 alias pyinstall='python3 -m pip install -r requirements.txt'
