@@ -43,7 +43,6 @@ FLATPAK_LIST=(
   com.slack.Slack
   md.obsidian.Obsidian
   net.veloren.airshipper
-  xyz.diamondb.gtkcord4
 )
 
 echo #######################
@@ -99,7 +98,7 @@ echo # Install Nerd Font #
 echo #####################
 
 # Nerd Font install
-wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
+wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Hack/Regular/HackNerdFont-Regular.ttf
 mkdir -p ~/.local/share/fonts 
 cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
 fc-cache -f -v
