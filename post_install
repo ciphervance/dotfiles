@@ -20,7 +20,6 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 PACKAGE_LIST=(
   bpytop
   cargo
-  discord
   gcc-c++
   git
   golang
@@ -40,6 +39,7 @@ PACKAGE_LIST=(
 
 FLATPAK_LIST=(
   com.bitwarden.desktop
+  com.discordapp.Discord
   com.slack.Slack
   md.obsidian.Obsidian
   net.veloren.airshipper
@@ -79,7 +79,7 @@ echo ########
 echo # Node #
 echo ########
 
-nvm install node
+# nvm install node
 
 echo ##########
 echo # pynvim #
