@@ -24,9 +24,11 @@ PACKAGE_LIST=(
   git
   golang
   fd-find
+  kitty
   java-openjdk
   neofetch
   neovim
+  protonup
   python3
   python3-pip
   ripgrep
@@ -41,6 +43,7 @@ FLATPAK_LIST=(
   com.bitwarden.desktop
   com.discordapp.Discord
   com.slack.Slack
+  net.davidotek.pupgui2
   md.obsidian.Obsidian
   net.veloren.airshipper
 )
@@ -49,7 +52,6 @@ echo #######################
 echo # Installing Packages #
 echo #######################
 
-# iterate through package and installs them
 for package_name in ${PACKAGE_LIST[@]}; do
   if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
     echo "Installing $package_name..."
@@ -97,10 +99,8 @@ echo #####################
 echo # Install Nerd Font #
 echo #####################
 
-# Nerd Font install
-wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Hack/Regular/HackNerdFont-Regular.ttf
-mkdir -p ~/.local/share/fonts 
-cp Hack\ Regular\ Nerd\ Font\ Complete.ttf ~/.local/share/fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip && unzip Hack.zip -d Hack
+mkdir -p ~/.local/share/fonts && cp Hack/HackNerdFont-regular.ttf ~/.local/share/fonts
 fc-cache -f -v
 
 echo ######################
@@ -115,17 +115,11 @@ echo ##################
 
 curl -sS https://starship.rs/install.sh | sh
 
-echo ########################
-echo # Creating Config File #
-echo ########################
+echo ###############
+echo # Config File #
+echo ###############
 
-mkdir -p ~/.config && touch ~/.config/starship.toml
-
-echo ###################
-echo # Enabling Config #
-echo ###################
-
-starship preset nerd-font-symbols > ~/.config/starship.toml
+cp terminal/starship.toml ~/.config/starship.toml
 
 echo ###################
 echo # Setting up nvim #
