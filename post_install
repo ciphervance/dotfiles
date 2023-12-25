@@ -6,46 +6,48 @@
 # Enable RPM Fusion
 
 sudo dnf install \
-  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+	https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
 sudo dnf install \
-  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+	https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Update system after confirming RPM Fusion is enabled
-sudo dnf update; sudo dnf upgrade
+sudo dnf update
+sudo dnf upgrade
 
 # Verify flatpak is engaged properly
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 PACKAGE_LIST=(
-  bpytop
-  cargo
-  gcc-c++
-  git
-  golang
-  fd-find
-  kitty
-  java-openjdk
-  neofetch
-  neovim
-  protonup
-  python3
-  python3-pip
-  ripgrep
-  rust
-  solaar
-  tilix
-  virt-manager
-  zsh
+	bpytop
+	cargo
+	gcc-c++
+	git
+	golang
+	fd-find
+	kitty
+	java-openjdk
+	neofetch
+	neovim
+	protonup
+	python3
+	python3-pip
+	ripgrep
+	ruby
+	rust
+	solaar
+	tilix
+	virt-manager
+	zsh
 )
 
 FLATPAK_LIST=(
-  com.bitwarden.desktop
-  com.discordapp.Discord
-  com.slack.Slack
-  net.davidotek.pupgui2
-  md.obsidian.Obsidian
-  net.veloren.airshipper
+	com.bitwarden.desktop
+	com.discordapp.Discord
+	com.slack.Slack
+	net.davidotek.pupgui2
+	md.obsidian.Obsidian
+	net.veloren.airshipper
 )
 
 echo #######################
@@ -53,14 +55,14 @@ echo # Installing Packages #
 echo #######################
 
 for package_name in ${PACKAGE_LIST[@]}; do
-  if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
-    echo "Installing $package_name..."
-    sleep .5
-    sudo dnf install "$package_name" -y
-    echo "$package_name has been installed"
-  else
-    echo "$package_name already installed"
-  fi
+	if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
+		echo "Installing $package_name..."
+		sleep .5
+		sudo dnf install "$package_name" -y
+		echo "$package_name has been installed"
+	else
+		echo "$package_name already installed"
+	fi
 done
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
@@ -70,7 +72,6 @@ for flatpak_name in ${FLATPAK_LIST[@]}; do
 		echo "$package_name already installed"
 	fi
 done
-
 
 echo #######
 echo # NVM #
@@ -82,6 +83,12 @@ echo # Node #
 echo ########
 
 # nvm install node
+
+echo #########
+echo # Rails #
+echo #########
+
+gem install rails
 
 echo ##########
 echo # pynvim #
@@ -142,16 +149,15 @@ rm -r *.ttf *.tar.gz *.rpm
 
 # Symlink files
 
-FILES=( 'vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'aliases' )
+FILES=('vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'aliases')
 for file in ${FILES[@]}; do
-  echo ""
-  echo "Simlinking $file to $HOME"
-  ln -sf "$PWD/$file" "$HOME/.$file"
-  if [ $? -eq 0 ]
-  then
-    echo "$PWD/$file ~> $HOME/.$file"
-  else
-    echo 'Install failed to symlink.'
-    exit 1
-  fi
+	echo ""
+	echo "Simlinking $file to $HOME"
+	ln -sf "$PWD/$file" "$HOME/.$file"
+	if [ $? -eq 0 ]; then
+		echo "$PWD/$file ~> $HOME/.$file"
+	else
+		echo 'Install failed to symlink.'
+		exit 1
+	fi
 done
