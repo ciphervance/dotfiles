@@ -5,15 +5,14 @@
 
 # Enable RPM Fusion
 
-sudo dnf install \
-	https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+#sudo dnf install \
+#	https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install \
-	https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+#sudo dnf install \
+#	https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Update system after confirming RPM Fusion is enabled
-sudo dnf update
-sudo dnf upgrade
+sudo apt update; sudo apt upgrade
 
 # Verify flatpak is engaged properly
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -55,10 +54,10 @@ echo # Installing Packages #
 echo #######################
 
 for package_name in ${PACKAGE_LIST[@]}; do
-	if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
+	if ! sudo apt list --installed | grep -q "^\<$package_name\>"; then
 		echo "Installing $package_name..."
 		sleep .5
-		sudo dnf install "$package_name" -y
+		sudo apt install "$package_name" -y
 		echo "$package_name has been installed"
 	else
 		echo "$package_name already installed"
@@ -107,7 +106,7 @@ echo # Install Nerd Font #
 echo #####################
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip && unzip Hack.zip -d Hack
-mkdir -p ~/.local/share/fonts && cp Hack/HackNerdFont-regular.ttf ~/.local/share/fonts
+mkdir -p ~/.local/share/fonts && cp Hack/HackNerdFont-Regular.ttf ~/.local/share/fonts
 fc-cache -f -v
 
 echo ######################
@@ -138,7 +137,7 @@ echo #######################
 echo # Cleanup and Updates #
 echo #######################
 
-sudo dnf upgrade --refresh
+sudo apt upgrade
 flatpak update
 
 echo ################
