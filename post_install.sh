@@ -1,18 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 # A script for setting up post install
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
-# Enable RPM Fusion
+# Check to see if running as sudo/root
 
-#sudo dnf install \
-#	https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+if [ "$(id -u)" -ne 0 ]; then
+        echo 'This script must be run by root' >&2
+        exit 1
+fi
 
-#sudo dnf install \
-#	https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-# Update system after confirming RPM Fusion is enabled
-sudo apt update; sudo apt upgrade
+# Update system 
+apt update && apt upgrade
 
 # Verify flatpak is engaged properly
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -20,7 +20,6 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 PACKAGE_LIST=(
 	bpytop
 	cargo
-	gcc-c++
 	git
 	golang
 	fd-find
@@ -28,12 +27,10 @@ PACKAGE_LIST=(
 	java-openjdk
 	neofetch
 	neovim
-	protonup
 	python3
 	python3-pip
 	ripgrep
 	ruby
-	rust
 	solaar
 	tilix
 	virt-manager
@@ -42,10 +39,7 @@ PACKAGE_LIST=(
 
 FLATPAK_LIST=(
 	com.bitwarden.desktop
-	com.discordapp.Discord
-	com.slack.Slack
 	net.davidotek.pupgui2
-	md.obsidian.Obsidian
 	net.veloren.airshipper
 )
 
@@ -54,10 +48,10 @@ echo # Installing Packages #
 echo #######################
 
 for package_name in ${PACKAGE_LIST[@]}; do
-	if ! sudo apt list --installed | grep -q "^\<$package_name\>"; then
+	if ! apt list --installed | grep -q "^\<$package_name\>"; then
 		echo "Installing $package_name..."
 		sleep .5
-		sudo apt install "$package_name" -y
+		apt install "$package_name" -y
 		echo "$package_name has been installed"
 	else
 		echo "$package_name already installed"
@@ -66,40 +60,24 @@ done
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
 	if ! flatpak list | grep -q $flatpak_name; then
-		flatpak install "$flatpak_name" -y
+		flatpak --user install "$flatpak_name" -y
 	else
 		echo "$package_name already installed"
 	fi
 done
 
 echo #######
-echo # NVM #
+echo # SSH #
 echo #######
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-echo ########
-echo # Node #
-echo ########
+ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
-# nvm install node
-
-echo #########
-echo # Rails #
-echo #########
-
-gem install rails
 
 echo ##########
 echo # pynvim #
 echo ##########
 
 /usr/bin/python3 -m pip install pynvim
-
-echo #######
-echo # SSH #
-echo #######
-
-ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
 echo #####################
 echo # Install Nerd Font #
@@ -137,14 +115,14 @@ echo #######################
 echo # Cleanup and Updates #
 echo #######################
 
-sudo apt upgrade
+apt upgrade
 flatpak update
 
 echo ################
 echo # File Cleanup #
 echo ################
 
-rm -r *.ttf *.tar.gz *.rpm
+rm -r *.ttf *.zip
 
 # Symlink files
 
