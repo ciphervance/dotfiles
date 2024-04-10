@@ -14,8 +14,6 @@ fi
 # Update system 
 apt update && apt upgrade
 
-# Verify flatpak is engaged properly
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 PACKAGE_LIST=(
 	bpytop
@@ -23,8 +21,8 @@ PACKAGE_LIST=(
 	git
 	golang
 	fd-find
+	flatpak
 	kitty
-	java-openjdk
 	neofetch
 	neovim
 	python3
@@ -47,6 +45,7 @@ echo #######################
 echo # Installing Packages #
 echo #######################
 
+
 for package_name in ${PACKAGE_LIST[@]}; do
 	if ! apt list --installed | grep -q "^\<$package_name\>"; then
 		echo "Installing $package_name..."
@@ -57,6 +56,9 @@ for package_name in ${PACKAGE_LIST[@]}; do
 		echo "$package_name already installed"
 	fi
 done
+
+# Verify flatpak is engaged properly
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
 	if ! flatpak list | grep -q $flatpak_name; then
