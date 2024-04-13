@@ -6,29 +6,31 @@
 
 # Check to see if running as sudo/root
 
-if [ "$(id -u)" -ne 0 ]; then
-        echo 'This script must be run by root' >&2
-        exit 1
-fi
+#if [ "$(id -u)" -ne 0 ]; then
+#        echo 'This script must be run by root' >&2
+#        exit 1
+#fi
 
 # Update system 
-apt update && apt upgrade
+sudo apt update && sudo apt upgrade
 
 
 PACKAGE_LIST=(
 	bpytop
 	cargo
+	curl
 	git
 	golang
 	fd-find
 	flatpak
-	kitty
+	#kitty
+	micro
 	neofetch
-	neovim
+	#neovim
 	python3
 	python3-pip
 	ripgrep
-	ruby
+	#ruby
 	solaar
 	tilix
 	virt-manager
@@ -38,7 +40,7 @@ PACKAGE_LIST=(
 FLATPAK_LIST=(
 	com.bitwarden.desktop
 	net.davidotek.pupgui2
-	net.veloren.airshipper
+	#net.veloren.airshipper
 )
 
 echo #######################
@@ -50,7 +52,7 @@ for package_name in ${PACKAGE_LIST[@]}; do
 	if ! apt list --installed | grep -q "^\<$package_name\>"; then
 		echo "Installing $package_name..."
 		sleep .5
-		apt install "$package_name" -y
+		sudo apt install "$package_name" -y
 		echo "$package_name has been installed"
 	else
 		echo "$package_name already installed"
@@ -62,7 +64,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
 	if ! flatpak list | grep -q $flatpak_name; then
-		flatpak --user install "$flatpak_name" -y
+		flatpak install "$flatpak_name" -y
 	else
 		echo "$package_name already installed"
 	fi
@@ -117,7 +119,7 @@ echo #######################
 echo # Cleanup and Updates #
 echo #######################
 
-apt upgrade
+sudo apt upgrade
 flatpak update
 
 echo ################
