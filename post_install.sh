@@ -27,6 +27,7 @@ PACKAGE_LIST=(
 	micro
 	neofetch
 	#neovim
+	plasma-discover-backend-flatpak
 	python3
 	python3-pip
 	ripgrep
