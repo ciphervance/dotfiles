@@ -57,8 +57,8 @@ alias tmuxreload='source ~/.tmux.conf'
 alias zshreload='source ~/.zshrc'
 
 # nvim
-alias vim=nvim
-alias vi=nvim
+alias vim=micro
+alias vi=micro
 
 # Configuration 
 alias vimrc='nvim ~/.vimrc'
