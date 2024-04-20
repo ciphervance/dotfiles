@@ -115,7 +115,7 @@ echo ###################
 echo # Setting up nvim #
 echo ###################
 
-cp -r nvim/ ~/.config/nvim/
+cp -r terminal/nushell/ ~/.config/
 
 echo #######################
 echo # Cleanup and Updates #
