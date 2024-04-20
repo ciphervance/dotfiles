@@ -865,4 +865,13 @@ $env.config = {
     ]
 }
 
+# Unix
+alias ll = ls -la
+alias ln = ln -v
+
+# nvim
+alias vim = micro
+alias vi = micro
+
+
 use ~/.cache/starship/init.nu
