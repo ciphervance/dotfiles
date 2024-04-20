@@ -4,50 +4,35 @@
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
-# Check to see if running as sudo/root
-
-#if [ "$(id -u)" -ne 0 ]; then
-#        echo 'This script must be run by root' >&2
-#        exit 1
-#fi
-
 # Update system 
 sudo apt update && sudo apt upgrade
 
 
 PACKAGE_LIST=(
 	bpytop
-	cargo
 	curl
 	git
 	golang
 	fd-find
 	flatpak
-	#kitty
+	libfontconfig-dev
+	libssl-dev:
 	micro
 	neofetch
-	#neovim
-	plasma-discover-backend-flatpak
 	python3
 	python3-pip
 	ripgrep
-	#ruby
-	solaar
-	tilix
 	virt-manager
-	zsh
 )
 
 FLATPAK_LIST=(
 	com.bitwarden.desktop
 	net.davidotek.pupgui2
-	#net.veloren.airshipper
 )
 
 echo #######################
 echo # Installing Packages #
 echo #######################
-
 
 for package_name in ${PACKAGE_LIST[@]}; do
 	if ! apt list --installed | grep -q "^\<$package_name\>"; then
@@ -59,9 +44,6 @@ for package_name in ${PACKAGE_LIST[@]}; do
 		echo "$package_name already installed"
 	fi
 done
-
-# Verify flatpak is engaged properly
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
 	if ! flatpak list | grep -q $flatpak_name; then
@@ -77,7 +59,6 @@ echo #######
 
 ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
-
 echo ##########
 echo # pynvim #
 echo ##########
@@ -91,12 +72,32 @@ echo #####################
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.zip && unzip Hack.zip -d Hack
 mkdir -p ~/.local/share/fonts && cp Hack/HackNerdFont-Regular.ttf ~/.local/share/fonts
 fc-cache -f -v
+rm -rf Hack*
+
+echo ###################
+echo # Install Rust Up #
+echo ###################
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+echo #####################
+echo # Enable Cargo/Rust #
+echo #####################
+
+. "$HOME/.cargo/env"
 
 echo ######################
-echo # Installing OhMyZSH #
+echo # Install Cargo Apps #
 echo ######################
 
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+CARGO_LIST=(
+	nu
+	alacritty
+)
+
+for cargo_name in ${CARGO_LIST[@]}; do
+		cargo install "$cargo_name"
+done
 
 echo ##################
 echo # Setup Starship #
@@ -123,12 +124,6 @@ echo #######################
 sudo apt upgrade
 flatpak update
 
-echo ################
-echo # File Cleanup #
-echo ################
-
-rm -r *.ttf *.zip
-
 # Symlink files
 
 FILES=('vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'aliases')
@@ -143,3 +138,36 @@ for file in ${FILES[@]}; do
 		exit 1
 	fi
 done
+
+
+
+####################################################
+# Soon to be removed from this post install script #
+####################################################
+
+# Check to see if running as sudo/root
+
+#if [ "$(id -u)" -ne 0 ]; then
+#        echo 'This script must be run by root' >&2
+#        exit 1
+#fi
+
+#echo ######################
+#echo # Installing OhMyZSH #
+#echo ######################
+
+#sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+	#cargo
+	#kitty
+	#neovim
+	#plasma-discover-backend-flatpak
+	#ruby
+	#solaar
+	#tilix
+	#zsh
+	#net.veloren.airshipper
+
+	# Verify flatpak is engaged properly
+	#flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	
