@@ -4,9 +4,8 @@
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
-# Update system 
+# Update system before installing packages
 sudo apt update && sudo apt upgrade
-
 
 PACKAGE_LIST=(
 	bpytop
@@ -22,6 +21,7 @@ PACKAGE_LIST=(
 	python3
 	python3-pip
 	ripgrep
+	steam
 	virt-manager
 )
 
@@ -116,6 +116,12 @@ echo # Setting up nvim #
 echo ###################
 
 cp -r terminal/nushell/ ~/.config/
+
+echo ######################
+echo # Fix Steam Download #
+echo ######################
+
+cp steam/steam_dev.cfg ~/.steam/steam/steam_dev.cfg
 
 echo #######################
 echo # Cleanup and Updates #
