@@ -1,0 +1,168 @@
+mkdir ~/.cache/starship
+starship init nu | save -f ~/.cache/starship/init.nu
+use ~/.cache/starship/init.nu
+starship preset gruvbox-rainbow -o ~/.config/starship.toml
+use ~/.cache/starship/init.nu
+micro ~/.config/starship.toml
+zshreload
+exit
+exit
+use ~/.cache/starship/init.nu
+micro ~/.config/starship.toml
+use ~/.cache/starship/init.nu
+]
+cat dotfiles/terminal/starship.toml
+cat dotfiles/post_install.sh
+cp terminal/starship.toml ~/.config/starship.toml<\n>
+cat .config/starship.toml
+cp dotfiles/terminal/starship.toml ~/.config/starship.toml<\n>
+micro ~/.config/starship.toml
+micro dotfiles/terminal/starship.toml
+git status
+cd dotfiles/
+git status
+git add .
+git commit -m "(feat): Changed to Tux from Fedora Logo"
+gp
+git push
+ls
+cd ..
+git clone http://172.16.5.30:3000/blake/debian-scripts.git
+cd debian-scripts/
+ls
+./install-discord.sh
+sudo ./install-discord.sh
+ls
+cat setup-dotfiles.sh
+cd
+ls
+mkdir Data
+cd Data/
+mkdir 500GB
+mkdir {1TB,5TB}
+mkdir [1TB,5TB]
+;s
+ls
+rm -r '[1TB,5TB]/'
+mkdir -v 1tb 5tb
+ls
+pwd
+ls 500GB/
+$nu.config-path
+mico ~/.config/nushell/config.nu
+micro ~/.config/nushell/config.nu
+exit
+micro ~/.config/nushell/config.nu
+ls
+micro ~/.steam/steam/steam_dev.cfg
+cd dotfiles/
+ls
+git checkout -b refresh_somethings
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo check nu
+. "$HOME/.cargo/env"
+alacritty)
+for cargo_name in ${CARGO_LIST[@]}; do
+cargo install "$cargo_name"done
+cargo install nu
+vim test.sh
+micro test.sh
+chmod +x test.sh
+./test.sh
+chmod +x test.sh
+micro test.sh
+chmod +x test.sh
+./test.sh
+sudo apt install cmake
+ls
+./test.sh
+micro post_install.sh
+git add .
+git commit -m "(feat): Rewriting install script, removed hack stuff"
+gp
+git push
+ls
+git push --set-upstream origin refresh_somethings
+cargo
+exit
+bash
+exit
+bash
+exit
+bash
+exit
+cargo
+$CARGO_PATH
+echo $CARGO_PATH
+echo $CARGO_HOME
+config nu
+$env.PATH
+env.CARGO_HOME
+$env.CARGO_HOME
+$env.HOME 
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+$env.CARGO_HOME
+which cargo
+which rustc
+ls /usr/local/bin/cargo
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+ls
+cd .config/nushell/
+ls
+vim env.nu
+micro env.nu
+exit
+micro /home/blake/.config/nushell/env.nu
+exit
+micro /home/blake/.config/nushell/env.nu
+exit
+$HOME
+micro /home/blake/.config/nushell/env.nu
+config
+fonfig env
+config env
+config nu
+env
+which nu
+which brew
+which home
+which
+which *
+micro /home/blake/.config/nushell/env.nu
+which *
+cargo
+exit
+bash
+exit
+cargo
+which cargo
+cargo
+micro /home/blake/.config/nushell/env.nu
+cargo
+bash
+cargo
+micro /home/blake/.config/nushell/env.nu
+exit
+micro /home/blake/.config/nushell/env.nu
+exit
+cargo
+which cargo
+micro /home/blake/.config/nushell/env.nu
+sudo apt remove rustup
+sudo apt remove rust
+sudo apt remove rustc
+sudo apt remove cargo
+rustup default system
+sudo apt install rustup
+micro /home/blake/.config/nushell/env.nu
+exit
+cargo
+./test.sh
+cargo install alacritty
+cargo install alacritty --force
+cargo
+ping 172.16.5.30
+ping 172.16.0.43
+ping 172.16.5.30
+ls
+ls .config/
