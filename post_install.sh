@@ -5,7 +5,11 @@
 # Created by Blake Ridgway
 
 # Update system before installing packages
-sudo apt update && sudo apt upgrade
+sudo dnf update && sudo dnf upgrade
+
+
+# Setup Flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 PACKAGE_LIST=(
 	bpytop
@@ -35,10 +39,10 @@ echo # Installing Packages #
 echo #######################
 
 for package_name in ${PACKAGE_LIST[@]}; do
-	if ! apt list --installed | grep -q "^\<$package_name\>"; then
+	if ! dnf list --installed | grep -q "^\<$package_name\>"; then
 		echo "Installing $package_name..."
 		sleep .5
-		sudo apt install "$package_name" -y
+		sudo dnf install "$package_name" -y
 		echo "$package_name has been installed"
 	else
 		echo "$package_name already installed"
@@ -57,7 +61,7 @@ echo #######
 echo # SSH #
 echo #######
 
-ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
+# ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
 
 echo ##########
 echo # pynvim #
@@ -90,14 +94,14 @@ echo ######################
 echo # Install Cargo Apps #
 echo ######################
 
-CARGO_LIST=(
-	nu
-	alacritty
-)
+#CARGO_LIST=(
+#	nu
+#	alacritty
+#)
 
-for cargo_name in ${CARGO_LIST[@]}; do
-		cargo install "$cargo_name"
-done
+#for cargo_name in ${CARGO_LIST[@]}; do
+#		cargo install "$cargo_name"
+#done
 
 echo ##################
 echo # Setup Starship #
@@ -121,13 +125,13 @@ echo ######################
 echo # Fix Steam Download #
 echo ######################
 
-cp steam/steam_dev.cfg ~/.steam/steam/steam_dev.cfg
+#cp steam/steam_dev.cfg ~/.steam/steam/steam_dev.cfg
 
 echo #######################
 echo # Cleanup and Updates #
 echo #######################
 
-sudo apt upgrade
+sudo dnf upgrade
 flatpak update
 
 # Symlink files
