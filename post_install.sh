@@ -149,13 +149,6 @@ echo ###############
 
 cp terminal/starship.toml ~/.config/starship.toml
 
-echo ###################
-echo # Setting up nvim #
-echo ###################
-
-cp -r terminal/nushell/ ~/.config/
-
-
 # Symlink files
 
 FILES=('vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'gitmessage' 'aliases')
