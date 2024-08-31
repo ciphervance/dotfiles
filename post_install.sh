@@ -170,18 +170,3 @@ for file in ${FILES[@]}; do
 		exit 1
 	fi
 done
-
-
-
-####################################################
-# Soon to be removed from this post install script #
-####################################################
-
-# Check to see if running as sudo/root
-
-#if [ "$(id -u)" -ne 0 ]; then
-#        echo 'This script must be run by root' >&2
-#        exit 1
-#fi
-
-
