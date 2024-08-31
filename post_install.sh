@@ -4,12 +4,6 @@
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
-#!/bin/bash
-
-# A script for setting up post install
-# Relies on Flatpak to be installed
-# Created by Blake Ridgway
-
 # Function to detect the Linux distribution
 detect_linux_distro() {
     if [ -f /etc/os-release ]; then
@@ -55,26 +49,29 @@ fi
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 PACKAGE_LIST=(
-    bpytop
+    btop
     curl
     git
-    golang
+    gh
     fd-find
     flatpak
     libfontconfig-dev
     libssl-dev
-    micro
     neofetch
     python3
     python3-pip
     ripgrep
-    steam
     virt-manager
+    zsh
 )
 
 FLATPAK_LIST=(
     com.bitwarden.desktop
+    com.github.tchx84.Flatseal
+    com.valvesoftware.Steam
     net.davidotek.pupgui2
+    net.veloren.airshipper
+    org.videolan.VLC
 )
 
 echo #######################
@@ -111,12 +108,6 @@ for flatpak_name in ${FLATPAK_LIST[@]}; do
     fi
 done
 
-echo #######
-echo # SSH #
-echo #######
-
-# ssh-keygen -t ed25519 -C ${USER}@$(hostname --fqdn)
-
 echo ##########
 echo # pynvim #
 echo ##########
@@ -132,30 +123,19 @@ mkdir -p ~/.local/share/fonts && cp Hack/HackNerdFont-Regular.ttf ~/.local/share
 fc-cache -f -v
 rm -rf Hack*
 
+
+echo ######################
+echo # Installing OhMyZSH #
+echo ######################
+
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
 echo ###################
 echo # Install Rust Up #
 echo ###################
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-echo #####################
-echo # Enable Cargo/Rust #
-echo #####################
-
-. "$HOME/.cargo/env"
-
-echo ######################
-echo # Install Cargo Apps #
-echo ######################
-
-#CARGO_LIST=(
-#	nu
-#	alacritty
-#)
-
-#for cargo_name in ${CARGO_LIST[@]}; do
-#		cargo install "$cargo_name"
-#done
 
 echo ##################
 echo # Setup Starship #
@@ -175,18 +155,6 @@ echo ###################
 
 cp -r terminal/nushell/ ~/.config/
 
-echo ######################
-echo # Fix Steam Download #
-echo ######################
-
-#cp steam/steam_dev.cfg ~/.steam/steam/steam_dev.cfg
-
-echo #######################
-echo # Cleanup and Updates #
-echo #######################
-
-sudo dnf upgrade
-flatpak update
 
 # Symlink files
 
@@ -216,22 +184,4 @@ done
 #        exit 1
 #fi
 
-#echo ######################
-#echo # Installing OhMyZSH #
-#echo ######################
 
-#sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-	#cargo
-	#kitty
-	#neovim
-	#plasma-discover-backend-flatpak
-	#ruby
-	#solaar
-	#tilix
-	#zsh
-	#net.veloren.airshipper
-
-	# Verify flatpak is engaged properly
-	#flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	
