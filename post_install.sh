@@ -4,34 +4,77 @@
 # Relies on Flatpak to be installed
 # Created by Blake Ridgway
 
-# Update system before installing packages
-sudo dnf update && sudo dnf upgrade
+#!/bin/bash
 
+# A script for setting up post install
+# Relies on Flatpak to be installed
+# Created by Blake Ridgway
+
+# Function to detect the Linux distribution
+detect_linux_distro() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        echo "$ID"
+    elif [ -f /etc/lsb-release ]; then
+        . /etc/lsb-release
+        echo "$DISTRIBUTOR_ID"
+    elif [ -f /etc/debian_version ]; then
+        echo "debian"
+    elif [ -f /etc/redhat-release ]; then
+        echo "redhat"
+    else
+        echo "unknown"
+    fi
+}
+
+# Detect the Linux distribution
+DISTRO=$(detect_linux_distro)
+
+# Determine the appropriate package manager
+case "$DISTRO" in
+    fedora|rhel|centos)
+        PACKAGE_MANAGER="dnf"
+        ;;
+    debian|ubuntu|pop)
+        PACKAGE_MANAGER="apt"
+        ;;
+    *)
+        echo "Unsupported distribution: $DISTRO"
+        exit 1
+        ;;
+esac
+
+# Update system before installing packages
+if [ "$PACKAGE_MANAGER" == "dnf" ]; then
+    sudo dnf update && sudo dnf upgrade
+elif [ "$PACKAGE_MANAGER" == "apt" ]; then
+    sudo apt update && sudo apt upgrade -y
+fi
 
 # Setup Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 PACKAGE_LIST=(
-	bpytop
-	curl
-	git
-	golang
-	fd-find
-	flatpak
-	libfontconfig-dev
-	libssl-dev:
-	micro
-	neofetch
-	python3
-	python3-pip
-	ripgrep
-	steam
-	virt-manager
+    bpytop
+    curl
+    git
+    golang
+    fd-find
+    flatpak
+    libfontconfig-dev
+    libssl-dev
+    micro
+    neofetch
+    python3
+    python3-pip
+    ripgrep
+    steam
+    virt-manager
 )
 
 FLATPAK_LIST=(
-	com.bitwarden.desktop
-	net.davidotek.pupgui2
+    com.bitwarden.desktop
+    net.davidotek.pupgui2
 )
 
 echo #######################
@@ -39,22 +82,33 @@ echo # Installing Packages #
 echo #######################
 
 for package_name in ${PACKAGE_LIST[@]}; do
-	if ! dnf list --installed | grep -q "^\<$package_name\>"; then
-		echo "Installing $package_name..."
-		sleep .5
-		sudo dnf install "$package_name" -y
-		echo "$package_name has been installed"
-	else
-		echo "$package_name already installed"
-	fi
+    if [ "$PACKAGE_MANAGER" == "dnf" ]; then
+        if ! dnf list --installed | grep -q "^\<$package_name\>"; then
+            echo "Installing $package_name..."
+            sleep .5
+            sudo dnf install "$package_name" -y
+            echo "$package_name has been installed"
+        else
+            echo "$package_name already installed"
+        fi
+    elif [ "$PACKAGE_MANAGER" == "apt" ]; then
+        if ! dpkg -l | grep -q "^\<ii\> $package_name"; then
+            echo "Installing $package_name..."
+            sleep .5
+            sudo apt install "$package_name" -y
+            echo "$package_name has been installed"
+        else
+            echo "$package_name already installed"
+        fi
+    fi
 done
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
-	if ! flatpak list | grep -q $flatpak_name; then
-		flatpak install "$flatpak_name" -y
-	else
-		echo "$package_name already installed"
-	fi
+    if ! flatpak list | grep -q $flatpak_name; then
+        flatpak install "$flatpak_name" -y
+    else
+        echo "$flatpak_name already installed"
+    fi
 done
 
 echo #######
