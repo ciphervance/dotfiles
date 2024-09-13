@@ -19,6 +19,7 @@ export PATH="$PATH:$HOME/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:$HOM
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 
+export PATH="$PATH:/opt/nvim-linux64/bin"
 source $ZSH/oh-my-zsh.sh
 source $HOME/dotfiles/aliases.zsh
 # source $HOME/.cargo/env
