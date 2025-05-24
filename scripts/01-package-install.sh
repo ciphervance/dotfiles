@@ -53,7 +53,9 @@ PACKAGE_LIST=($(printf "%s\n" "${PACKAGE_LIST[@]}" | LC_ALL=C sort -u))
 FLATPAK_LIST=(
     com.bitwarden.desktop
     com.github.tchx84.Flatseal
+    com.jetbrains.Rider
     com.valvesoftware.Steam
+    com.visualstudio.code
     net.davidotek.pupgui2
     net.veloren.airshipper
     org.videolan.VLC

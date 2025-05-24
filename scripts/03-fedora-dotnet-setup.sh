@@ -21,7 +21,6 @@ echo "############################################################"
 echo ""
 
 FEDORA_DOTNET_PACKAGES=(
-    "code" # Visual Studio Code from Fedora repositories
     "postgresql-server"
     "postgresql-contrib"
     "moby-engine" # Docker Engine on Fedora
