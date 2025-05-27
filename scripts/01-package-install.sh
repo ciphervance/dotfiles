@@ -59,6 +59,7 @@ FLATPAK_LIST=(
     net.davidotek.pupgui2
     net.veloren.airshipper
     org.videolan.VLC
+    tv.plex.PlexDesktop
 )
 
 echo "Installing System Packages..."
