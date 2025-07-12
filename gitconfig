@@ -2,7 +2,7 @@
 	email = blake@blakeridgway.dev
 	name = Blake Ridgway
 [commit]
-	template = /home/blake/dotfiles/commit-conventions.txt
+	template = ~/dotfiles/commit-conventions.txt
 [core]
 	editor = nvim +14 -c +startinsert
 [init]
