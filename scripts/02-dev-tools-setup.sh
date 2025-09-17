@@ -61,22 +61,75 @@ else
     rm -rf "${TEMP_FONT_DIR}" # Clean up
 fi
 
+OS="$(uname | tr '[:upper:]' '[:lower:]')"
+ARCH_RAW="$(uname -m)"
+case "${ARCH_RAW}" in
+	x86_64) ARCH=amd64 ;;
+	aarch64|arm64) ARCH=arm64 ;;
+	*) echo "Unsupported arch: ${ARCH_RAW}" >&2; exit 1 ;;
+esac
 
-# Installing OhMyZSH
-echo "Installing OhMyZSH..."
-if [ -d "$HOME/.oh-my-zsh" ]; then
-    echo "OhMyZSH already installed."
+_add_to_rc() {
+  local rcfile="$1" snippet="$2"
+  grep -qxF "${snippet}" "${rcfile}" 2>/dev/null || {
+    echo "# added by 02-dev-tools-setup.sh" >> "${rcfile}"
+    echo "${snippet}" >> "${rcfile}"
+    echo "  → updated ${rcfile}"
+  }
+}
+
+if ! command -v go &>/dev/null; then
+  echo "➤ Fetching latest Go version..."
+  LATEST_GO_FULL="$(curl -fsSL https://go.dev/VERSION?m=text)"  
+  # e.g. "go1.21.4"
+  LATEST_GO="${LATEST_GO_FULL#go}"                    
+  TAR="go${LATEST_GO}.${OS}-${ARCH}.tar.gz"          
+  URL="https://go.dev/dl/${TAR}"
+
+  echo "   latest is ${LATEST_GO_FULL}, downloading ${TAR}..."
+  TMPDIR="$(mktemp -d)"
+  curl -fsSL "${URL}" -o "${TMPDIR}/${TAR}"
+  sudo rm -rf /usr/local/go
+  sudo tar -C /usr/local -xzf "${TMPDIR}/${TAR}"
+  rm -rf "${TMPDIR}"
+  echo "Installed Go ${LATEST_GO_FULL} to /usr/local/go"
+
+  # ensure PATH in your RCs
+  SNIPPET='export PATH=$PATH:/usr/local/go/bin'
+  for rc in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
+    [ -f "${rc}" ] && _add_to_rc "${rc}" "${SNIPPET}"
+  done
 else
-    echo "Attempting to install OhMyZSH. It might prompt to change your default shell."
-    # CHSH=no RUNZSH=no prevents the script from trying to change shell and exit
-    # The --unattended flag attempts a non-interactive install
-    if sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; then
-        echo "OhMyZSH installation script finished."
-        echo "If ZSH is not your default shell, change it manually: chsh -s \$(which zsh)"
-        echo "Then, start a new ZSH session."
-    else
-        echo "ERROR: OhMyZSH installation failed."
-    fi
+  INSTALLED_FULL="$(go version | awk '{print $3}')" # e.g. "go1.21.4"
+  LATEST_GO_FULL="$(curl -fsSL https://go.dev/VERSION?m=text)"
+  if [ "${INSTALLED_FULL}" = "${LATEST_GO_FULL}" ]; then
+    echo "Go ${INSTALLED_FULL} already up-to-date"
+  else
+    echo "Go ${INSTALLED_FULL} installed but ${LATEST_GO_FULL} is available."
+    echo "    rerun this script to upgrade or uninstall manually."
+  fi
+fi
+
+echo
+
+if ! command -v oh-my-posh &>/dev/null; then
+  echo "➤ Installing Oh-My-Posh latest release..."
+  # GitHub /releases/latest/download will 302 redirect to actual asset
+  BIN_URL="https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-${OS}-${ARCH}"
+  THEME_URL="https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/jandedobbeleer.omp.json"
+
+  TMPBIN="$(mktemp)"
+  curl -fsSL -L "${BIN_URL}" -o "${TMPBIN}"
+  sudo install -m755 "${TMPBIN}" /usr/local/bin/oh-my-posh
+  rm -f "${TMPBIN}"
+  echo "Installed oh-my-posh to /usr/local/bin/oh-my-posh"
+
+  mkdir -p "${HOME}/.poshthemes"
+  curl -fsSL -L "${THEME_URL}" -o "${HOME}/.poshthemes/jandedobbeleer.omp.json"
+  echo "Downloaded default theme to ~/.poshthemes/"
+
+else
+  echo "✔ Oh-My-Posh already installed: $(oh-my-posh --version | head -n1)"
 fi
 
 # Install Rust Up
