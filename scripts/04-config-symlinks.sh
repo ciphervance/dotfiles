@@ -27,7 +27,7 @@ fi
 
 # Symlink files (keeping the original simple approach)
 echo "Symlinking dotfiles..."
-FILES=('vimrc' 'vim' 'zshrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'commit-conventions.txt' 'aliases.zsh')
+FILES=('vimrc' 'vim' 'bashrc' 'zsh' 'agignore' 'gitconfig' 'gitignore' 'commit-conventions.txt' 'aliases.zsh')
 
 for file in "${FILES[@]}"; do
     echo ""

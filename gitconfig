@@ -1,6 +1,6 @@
 [user]
-	email = blake@blakeridgway.dev
-	name = Blake Ridgway
+	email = hello@ciphervance.com
+	name = Cipher Vance
 [commit]
 	template = ~/dotfiles/commit-conventions.txt
 [core]
